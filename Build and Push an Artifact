@@ -1,0 +1,35 @@
+pipeline:
+  name: CI Quickstart
+  identifier: CI_Quickstart
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.CI_Quickstart
+        repoName: goHelloWorldServer
+        build: <+input>
+  stages:
+    - stage:
+        name: Build Test and Push
+        identifier: Build_Test_and_Push
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Build and push image to DockerHub
+                  identifier: Build_and_push_image_to_DockerHub
+                  spec:
+                    connectorRef: account.Docker_Quickstart
+                    repo: cretzman/ciquickstart
+                    tags:
+                      - <+pipeline.sequenceId>
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.cidelegate
+              namespace: harness-delegate-uat
+          serviceDependencies: []
+  projectIdentifier: CI_Quickstart
+  orgIdentifier: default
