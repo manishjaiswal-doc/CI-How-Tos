@@ -1,1 +1,2 @@
-# CI-How-Tos: Setting up YAML pipelines in Harness ( Demo Test) 
+# CI-How-Tos: 
+Learn how to set up pipelines in Harness.
